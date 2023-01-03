@@ -1,0 +1,49 @@
+.top-bar{
+  background-color: #23B7E5;
+  .menu-group{
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .menu{
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      mat-icon{
+        color: white;
+        font-size: 25px;
+      }
+    }
+    span{
+      color: white;
+    }
+  }
+
+  .profile-group{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    #notification{
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      mat-icon{
+        font-size: 18px;
+        height: unset;
+        width: unset;
+        color: white;
+      }
+    }
+
+    #profile{
+      border: 1px solid rgb(0, 119, 255);
+      border-radius: 25px;
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+

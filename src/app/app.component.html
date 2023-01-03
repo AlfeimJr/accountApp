@@ -1,0 +1,23 @@
+<app-top-bar (btnClick)="drawer.toggle()"></app-top-bar>
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <div class="tittle-menu">
+      <p>Menu</p>
+    </div>
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false" class="content-group">
+        <mat-expansion-panel-header class="china">
+          <mat-panel-title class="title-group">
+            <mat-icon>home</mat-icon>
+            <p>PAGINA INICIAL</p>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Lançamentos</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-drawer>
+  <router-outlet></router-outlet>
+
+</mat-drawer-container>

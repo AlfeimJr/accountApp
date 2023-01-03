@@ -1,0 +1,11 @@
+.add-mounth{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  .header{}
+  .input-group{
+    display: flex;
+    flex-direction: column;
+  }
+}
