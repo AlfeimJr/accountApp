@@ -11,8 +11,8 @@
     </div>
 
     <div class="table-group" *ngIf="pagination.items">
-      <div class="mat-elevation-z8" *ngFor="let month of pagination.items">
-        <div class="example-table-container" >
+      <div class="mat-elevation-z8" *ngFor="let launch of pagination.items" >
+        <div class="example-table-container"  >
           <mat-accordion >
             <mat-expansion-panel
               (opened)="panelOpenState = true"
@@ -21,20 +21,22 @@
             >
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <p>MÊS DE {{month.month.toUpperCase()}}</p>
+                  <p>MÊS DE {{launch.month.toUpperCase()}}</p>
                 </mat-panel-title>
 
               </mat-expansion-panel-header>
-              <button (click)="openCreateColumn(month)" class="add-column">Adicionar Coluna</button>
+              <button (click)="openCreateColumn(launch)" class="add-column">Adicionar Coluna</button>
               <table
                 mat-table
-                [dataSource]="pagination.items"
+                [dataSource]="launch.transactions"
                 class="example-table"
                 matSort
                 matSortActive="created"
                 matSortDisableClear
                 matSortDirection="desc"
               >
+              <ng-container ></ng-container>
+
                 <!-- Number Column -->
                 <ng-container matColumnDef="data">
                   <th mat-header-cell *matHeaderCellDef>Data</th>
@@ -117,6 +119,7 @@
                   mat-row
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
+
               </table>
             </mat-expansion-panel>
           </mat-accordion>

@@ -1,6 +1,6 @@
-import { transactionsI } from './account.interface';
+import { transactionsI, accountI } from './account.interface';
 export interface paginatedI {
-  items: transactionsI[],
+  items: accountI[],
 	_page: number,
 	_limit: number,
 }

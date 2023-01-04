@@ -1,6 +1,9 @@
 import { AccountService } from './../../services/account.service';
 import { paginatedI } from '../../@core/interfaces/pagineted.interface';
-import { accountI, transactionsI } from '../../@core/interfaces/account.interface';
+import {
+  accountI,
+  transactionsI,
+} from '../../@core/interfaces/account.interface';
 import { AlertComponent } from './alert/alert.component';
 import { CreateColumnComponent } from './create-column/create-column.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
@@ -23,13 +26,13 @@ export class HomeComponent {
     'month',
     'pay',
     'edit',
-    'delete'
-
+    'delete',
   ];
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
   accounts: accountI[] = [];
+  account!: accountI;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   pagination: paginatedI = {
@@ -37,7 +40,6 @@ export class HomeComponent {
     _page: 1,
     _limit: 10,
   };
-  account!: [{accountI: accountI[]}]
   panelOpenState = false;
   constructor(
     private accountService: AccountService,
@@ -45,55 +47,66 @@ export class HomeComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getAccount();
   }
   openDialog() {
-    this.dialog.open(CreateAccountComponent, {
-      width: '500px',
-      data: {
-        items: this.pagination.items
-      },
-    }).afterClosed().subscribe(result =>{
-      this.getProducts()
-    });
+    this.dialog
+      .open(CreateAccountComponent, {
+        width: '500px',
+        data: {
+          items: this.pagination.items,
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.getAccount();
+      });
   }
 
-  openAlert(accountI: transactionsI[], column: accountI){
-    this.dialog.open(AlertComponent,{
-      data: {
-        account: accountI,
-        column: column
-      },
-      width: '500px'
-    }).afterClosed().subscribe(result =>{
-
-      this.getProducts()
-    });
+  openAlert(accountI: transactionsI[], column: accountI) {
+    this.dialog
+      .open(AlertComponent, {
+        data: {
+          account: accountI,
+          column: column,
+        },
+        width: '500px',
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.getAccount();
+      });
   }
 
-  openCreateColumn(account: transactionsI){
-    this.dialog.open(CreateColumnComponent, {
-      width: '500px',
-      data: {
-        account: account
-      }
-    }).afterClosed().subscribe(result =>{
-
-      this.getProducts()
-    });
+  openCreateColumn(launch: accountI) {
+    this.dialog
+      .open(CreateColumnComponent, {
+        width: '500px',
+        data: {
+          account: launch
+        }
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.getAccount();
+      });
   }
 
-  openEdit(account: accountI){
-    this.dialog.open(EditAccountComponent, {
-      data: {
-        account: account
-      }
-    }).afterClosed().subscribe(result =>{
-      this.getProducts()
-    })
+  openEdit(account: accountI) {
+    this.dialog
+      .open(EditAccountComponent, {
+        data: {
+          account: account,
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.getAccount();
+      });
   }
 
-  public setPaginationData(data: transactionsI[]): void {
+  public setPaginationData(data: accountI[]): void {
+
     this.pagination.items = data
   }
   private getFilters(): { [key: string]: string | number } {
@@ -103,12 +116,10 @@ export class HomeComponent {
     };
   }
 
-  getProducts() {
-    this.accountService.getProducts(this.getFilters()).subscribe({
-      next: (accounts) => {
-        this.setPaginationData(accounts);
-      },
-      complete: () => {},
+  getAccount() {
+    this.accountService.getAccount(this.getFilters()).subscribe((account) => {
+      this.accounts = account
+      this.setPaginationData(account);
     });
   }
 }

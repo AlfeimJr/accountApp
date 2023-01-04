@@ -26,7 +26,6 @@ export class CreateAccountComponent {
   createForm(account: Account) {
     this.accounts = this.formBuilder.group({
       month: [account.month],
-      accounts: [account.accounts],
     });
   }
 

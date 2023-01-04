@@ -1,3 +1,4 @@
+import { createT } from './../@core/types/create.d';
 import { transactionsI, accountI } from '../@core/interfaces/account.interface';
 
 import { environment } from '../../environments/environment';
@@ -12,21 +13,18 @@ const apiUrl = environment.apiUrl
 export class AccountService {
 
   constructor(private http: HttpClient) { }
-
-  getProducts(filters: any): Observable<transactionsI[]>{
+  getAccount(filters: any): Observable<accountI[]>{
     return this.http
-    .get<transactionsI[]>(apiUrl + 'account', {
-      params: filters,
-    })
-    .pipe(map((response: transactionsI[]) => response));
+    .get<accountI[]>(apiUrl + '/account?_embed=transactions', {params: filters})
+    .pipe(map((response: accountI[]) => response));
   }
 
-  createAccount(account: Omit<accountI, 'id'>){
-    return this.http.post(apiUrl + 'account', account)
+  createAccount(account: createT){
+    return this.http.post(apiUrl + '/account', account)
   }
 
-  createColumn(transaction: Omit<transactionsI, 'id'>){
-    return this.http.post(apiUrl + `transactions`, transaction)
+  createColumn(id: number, transaction: createT){
+    return this.http.post(apiUrl + `/account/${id}/transactions`, transaction)
   }
 
   deleteColumn(){}

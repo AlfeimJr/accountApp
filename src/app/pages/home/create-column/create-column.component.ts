@@ -1,11 +1,17 @@
+import { accountI } from './../../../@core/interfaces/account.interface';
+import { createT } from './../../../@core/types/create.d';
 import { AccountService } from './../../../services/account.service';
-import { transactionsI, Column } from '../../../@core/interfaces/account.interface';
+import {
+  transactionsI,
+  Column,
+} from '../../../@core/interfaces/account.interface';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, Inject } from '@angular/core';
 
 type dataT = {
-  account: transactionsI;
+  account: accountI;
+  transactions: transactionsI[];
 };
 
 @Component({
@@ -15,7 +21,7 @@ type dataT = {
 })
 export class CreateColumnComponent {
   column!: FormGroup;
-  account!: transactionsI;
+  account!: accountI;
   constructor(
     private accountService: AccountService,
     private formBuilder: FormBuilder,
@@ -26,7 +32,6 @@ export class CreateColumnComponent {
   ngOnInit(): void {
     this.createForm(new Column());
     this.account = this.data.account;
-    console.log(this.data);
   }
 
   createForm(account: Column) {
@@ -41,9 +46,7 @@ export class CreateColumnComponent {
 
   onSubmit() {
     this.accountService
-      .createColumn(this.column.value)
-      .subscribe((account) => {
-        this.matDialogRef.close();
-      });
+      .createColumn(this.account.id, this.column.value as createT)
+      .subscribe((account: any) => {});
   }
 }

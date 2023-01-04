@@ -1,3 +1,4 @@
+
 export interface transactionsI {
   id: number,
   data: string;
@@ -11,6 +12,7 @@ export interface transactionsI {
 export interface accountI {
   id:number
   month: string;
+  transactions:transactionsI[]
 }
 
 export class Account {
@@ -19,9 +21,9 @@ export class Account {
 }
 
 export class Column {
-  accounts: [] = []
   data: string = '';
   category: string = '';
+  accountId: number = 2;
   description: string = '';
   value: string = '';
   prevision: string = '';
