@@ -1,4 +1,4 @@
-import { createT } from './../@core/types/create.d';
+import { createTransactionT, createAccountT } from './../@core/types/create.d';
 import { transactionsI, accountI } from '../@core/interfaces/account.interface';
 
 import { environment } from '../../environments/environment';
@@ -19,13 +19,23 @@ export class AccountService {
     .pipe(map((response: accountI[]) => response));
   }
 
-  createAccount(account: createT){
+  createAccount(account: createAccountT){
     return this.http.post(apiUrl + '/account', account)
   }
 
-  createColumn(id: number, transaction: createT){
-    return this.http.post(apiUrl + `/account/${id}/transactions`, transaction)
+  createColumn( transaction: createTransactionT){
+    return this.http.post(apiUrl + `/transactions`, transaction)
   }
 
-  deleteColumn(){}
+  editColumn(id: number, transaction: transactionsI){
+    return this.http.patch(apiUrl + `/transactions/${id}`, transaction)
+  }
+
+  deleteTransaction(id: number ): Observable<transactionsI>{
+    return this.http.delete<transactionsI>(apiUrl + `/transactions/${id}` )
+  }
+
+  deleteAccount(id:number): Observable<accountI>{
+    return this.http.delete<accountI>(apiUrl + `/account/${id}`)
+  }
 }

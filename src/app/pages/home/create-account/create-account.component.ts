@@ -1,3 +1,5 @@
+import { createAccountT } from './../../../@core/types/create.d';
+
 import { Account } from '../../../@core/interfaces/account.interface';
 import { AccountService } from './../../../services/account.service';
 
@@ -30,8 +32,12 @@ export class CreateAccountComponent {
   }
 
   submit() {
-    this.accountService.createAccount(this.accounts.value).subscribe({
-      complete: () => {},
-    });
+    this.accountService
+      .createAccount(this.accounts.value as createAccountT)
+      .subscribe({
+        complete: () => {
+          this.matDialogRef.close();
+        },
+      });
   }
 }

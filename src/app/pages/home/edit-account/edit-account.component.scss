@@ -1,0 +1,17 @@
+.edit-columns{
+  .header-group{
+    display: flex;
+    padding: 15px;
+    justify-content: space-between;
+    text-align: center;
+    mat-icon{
+      font-size: 18px;
+      color: #0A1840;
+    }
+    p{
+      font-size: 16px;
+      font-weight: 500;
+      color: #0A1840;
+    }
+  }
+}

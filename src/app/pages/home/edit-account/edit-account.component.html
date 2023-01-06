@@ -1,37 +1,48 @@
-<div style="display: flex; flex-direction: column; padding: 15px; gap: 15px;">
-  <div>
-    <p>Edite suas Informações</p>
+<div class="edit-columns">
+  <div class="header-group">
+    <p>Editar</p>
+    <mat-icon>build</mat-icon>
   </div>
-  <mat-form-field appearance="fill" class="example-form-field" appearance="outline">
-    <mat-label>Escolha uma Data</mat-label>
-    <input matInput [matDatepicker]="datepicker">
-    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-    <mat-datepicker #datepicker>
-      <mat-datepicker-actions>
-        <button mat-button matDatepickerCancel>Cancel</button>
-        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-      </mat-datepicker-actions>
-    </mat-datepicker>
-  </mat-form-field>
+  <form
+    action=""
+    [formGroup]="column"
+    (ngSubmit)="editTransaction()"
+    style="display: flex; flex-direction: column; padding: 15px; gap: 15px"
+  >
+    <mat-form-field class="example-form-field" appearance="outline">
+      <mat-label>Data</mat-label>
+      <input matInput type="text" formControlName="data"/>
+    </mat-form-field>
 
-  <mat-form-field class="example-form-field" appearance="outline">
-    <mat-label>Categoria</mat-label>
-    <input matInput type="text"  [value]="account.category">
+    <mat-form-field class="example-form-field" appearance="outline">
+      <mat-label>Categoria</mat-label>
+      <input matInput type="text" formControlName="category"/>
+    </mat-form-field>
 
-  </mat-form-field>
+    <mat-form-field class="example-form-field" appearance="outline">
+      <mat-label>Valor</mat-label>
+      <input matInput  type="number" min="0.00" max="10000.00" step="0.01" formControlName="value"/>
+    </mat-form-field>
 
-  <mat-form-field class="example-form-field" appearance="outline">
-    <mat-label>Valor</mat-label>
-    <input matInput type="text" [value]="account.value">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Pago?</mat-label>
+      <mat-select  formControlName="pay"  >
+        <mat-option *ngFor='let pay of payOptions' value="{{pay.label}}">{{pay.label}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="example-form-field" appearance="outline">
-    <mat-label>Mês</mat-label>
-    <input matInput type="text" [value]="account.month">
-  </mat-form-field>
-
-  <mat-form-field class="example-form-field" appearance="outline">
-    <mat-label>Pago?</mat-label>
-    <input matInput type="text" [value]="account.pay">
-  </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Mês do vencimento</mat-label>
+      <input type="text" matInput formControlName='month' [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let month of filtredMonths | async" [value]="month">
+          {{month}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <div>
+      <app-button textContent="Salvar" class="confirm" type="submit"></app-button>
+    </div>
+  </form>
 </div>
+

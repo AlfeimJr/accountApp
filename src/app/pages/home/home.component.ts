@@ -4,7 +4,7 @@ import {
   accountI,
   transactionsI,
 } from '../../@core/interfaces/account.interface';
-import { AlertComponent } from './alert/alert.component';
+import { RemoveTransactionComponent } from './remove-transaction/remove-transaction';
 import { CreateColumnComponent } from './create-column/create-column.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
@@ -12,6 +12,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
+import { RemoveAccountComponent } from './remove-account/remove-account.component';
 
 @Component({
   selector: 'app-home',
@@ -63,14 +64,26 @@ export class HomeComponent {
       });
   }
 
-  openAlert(accountI: transactionsI[], column: accountI) {
+  openDeleteTransaction(transactions: transactionsI) {
     this.dialog
-      .open(AlertComponent, {
+      .open(RemoveTransactionComponent, {
         data: {
-          account: accountI,
-          column: column,
+          transaction: transactions,
         },
         width: '500px',
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.getAccount();
+      });
+  }
+
+  openDeleteAccount(account: accountI) {
+    this.dialog
+      .open(RemoveAccountComponent, {
+        data: {
+          account: account,
+        },
       })
       .afterClosed()
       .subscribe((result) => {
@@ -83,8 +96,8 @@ export class HomeComponent {
       .open(CreateColumnComponent, {
         width: '500px',
         data: {
-          account: launch
-        }
+          account: launch,
+        },
       })
       .afterClosed()
       .subscribe((result) => {
@@ -98,6 +111,7 @@ export class HomeComponent {
         data: {
           account: account,
         },
+        width: '500px'
       })
       .afterClosed()
       .subscribe((result) => {
@@ -106,8 +120,7 @@ export class HomeComponent {
   }
 
   public setPaginationData(data: accountI[]): void {
-
-    this.pagination.items = data
+    this.pagination.items = data;
   }
   private getFilters(): { [key: string]: string | number } {
     return {
@@ -118,7 +131,7 @@ export class HomeComponent {
 
   getAccount() {
     this.accountService.getAccount(this.getFilters()).subscribe((account) => {
-      this.accounts = account
+      this.accounts = account;
       this.setPaginationData(account);
     });
   }

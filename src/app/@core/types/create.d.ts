@@ -1,3 +1,4 @@
-import { accountI } from './../interfaces/account.interface'
-export type createT = Omit<accountI, 'id'>
+import { accountI, transactionsI } from './../interfaces/account.interface'
+export type createAccountT = Omit<accountI, 'id'>
 
+export type createTransactionT = Omit<transactionsI, 'id'>

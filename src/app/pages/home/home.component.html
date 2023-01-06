@@ -4,28 +4,56 @@
       <p>Lançamentos</p>
       <div class="add-mounth">
         <button (click)="openDialog()">
-          <mat-icon>add</mat-icon>
           <p>Novo lançamento</p>
+          <mat-icon>add</mat-icon>
         </button>
       </div>
     </div>
 
     <div class="table-group" *ngIf="pagination.items">
-      <div class="mat-elevation-z8" *ngFor="let launch of pagination.items" >
-        <div class="example-table-container"  >
-          <mat-accordion >
+      <div class="mat-elevation-z8" *ngFor="let launch of pagination.items">
+        <div class="example-table-container">
+          <mat-accordion>
             <mat-expansion-panel
               (opened)="panelOpenState = true"
               (closed)="panelOpenState = false"
               class="account-group"
             >
+              <div
+                *ngIf="launch.transactions.length == 0"
+                class="not-transaction"
+              >
+                <p>
+                  Não há nenhuma transação criada ainda, crie sua primeira
+                  transação!
+                </p>
+                <button
+                  (click)="openCreateColumn(launch)"
+                  class="add-primary-transaction"
+                >
+                  Criar Transação
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <p>MÊS DE {{launch.month.toUpperCase()}}</p>
+                  <p>MÊS DE {{ launch.month.toUpperCase() }}</p>
                 </mat-panel-title>
-
+                <mat-panel-description>
+                  <mat-icon (click)="openDeleteAccount(launch)"
+                    >delete</mat-icon
+                  >
+                </mat-panel-description>
               </mat-expansion-panel-header>
-              <button (click)="openCreateColumn(launch)" class="add-column">Adicionar Coluna</button>
+              <button
+                (click)="openCreateColumn(launch)"
+                *ngIf="launch.transactions.length > 0"
+                class="add-column"
+              >
+                Adicionar Transação
+                <mat-icon>add</mat-icon>
+              </button>
+
               <table
                 mat-table
                 [dataSource]="launch.transactions"
@@ -34,8 +62,9 @@
                 matSortActive="created"
                 matSortDisableClear
                 matSortDirection="desc"
+                *ngIf="launch.transactions.length > 0"
               >
-              <ng-container ></ng-container>
+                <ng-container></ng-container>
 
                 <!-- Number Column -->
                 <ng-container matColumnDef="data">
@@ -59,7 +88,9 @@
                   >
                     Valor
                   </th>
-                  <td mat-cell *matCellDef="let row">{{ row.value }}</td>
+                  <td mat-cell *matCellDef="let row" id="money">
+                    R$ {{ row.value }}
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="month">
@@ -83,7 +114,11 @@
                   >
                     Pago?
                   </th>
-                  <td mat-cell *matCellDef="let row">{{ row.pay }}</td>
+                  <td mat-cell *matCellDef="let row">
+                    <p [ngClass]="row.pay == 'Pendente' ? 'pending' : 'pay'">
+                      {{ row.pay }}
+                    </p>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="edit">
@@ -110,7 +145,9 @@
                     Excluir
                   </th>
                   <td mat-cell *matCellDef="let row">
-                    <mat-icon  >delete</mat-icon>
+                    <mat-icon (click)="openDeleteTransaction(row)"
+                      >delete</mat-icon
+                    >
                   </td>
                 </ng-container>
 
@@ -119,7 +156,6 @@
                   mat-row
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
-
               </table>
             </mat-expansion-panel>
           </mat-accordion>

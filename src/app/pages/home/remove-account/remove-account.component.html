@@ -1,0 +1,15 @@
+<div class="remove-transaction">
+  <div class="header">
+    <p>Remover</p>
+    <div>
+      <mat-icon >delete</mat-icon>
+    </div>
+  </div>
+  <div class="main">
+    <p>Deseja realmente remover esta transação?</p>
+  </div>
+   <div class="footer">
+    <app-button mat-dialog-close class="cancel" textContent="Cancelar"></app-button>
+    <app-button (click)="confirmDelete()" class="confirm" textContent="Confirmar"></app-button>
+   </div>
+</div>

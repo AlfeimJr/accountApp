@@ -1,23 +1,24 @@
-.add-mounth{
+.remove-transaction{
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   padding: 15px;
   .header{
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    color: #0A1840;
+    font-weight: 500;
+  }
+  .main{
     p{
-      color: #0A1840;
+      font-size: 14px;
       font-weight: 500;
     }
-    mat-icon{
-      color: #0A1840;
-      font-size: 18px;
-    }
   }
-  .input-group{
+  .footer{
     display: flex;
-    flex-direction: column;
+    justify-content: end;
+    gap: 10px;
   }
 }

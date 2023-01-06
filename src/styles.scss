@@ -2,9 +2,24 @@ body{
   margin: 0;
 }
 mat-icon{
-  height: unset;
-  width: unset;
+  height: unset !important;
+  width: unset !important;
 }
 p{
   margin: 0 !important;
+}
+
+.pay{
+  color: white !important;
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: rgb(128, 235, 128) !important;
+}
+.pending{
+  color: white !important;
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #FFAB00 !important;
 }

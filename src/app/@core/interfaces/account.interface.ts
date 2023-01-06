@@ -1,31 +1,30 @@
-
+import { payOptionsI } from './pay-options.interface';
 export interface transactionsI {
-  id: number,
+  id: number;
   data: string;
   category: string;
-  value: string;
+  value: number;
   prevision: string;
-  pay: string;
+  pay: payOptionsI[];
   month: string;
 }
 
 export interface accountI {
-  id:number
+  id: number;
   month: string;
-  transactions:transactionsI[]
+  transactions: transactionsI[];
 }
 
 export class Account {
   month: string = '';
-  accounts: accountI[] = []
+  accounts: accountI[] = [];
 }
 
 export class Column {
   data: string = '';
   category: string = '';
-  accountId: number = 2;
   description: string = '';
-  value: string = '';
+  value: number = 0;
   prevision: string = '';
   pay: string = '';
   month: string = '';

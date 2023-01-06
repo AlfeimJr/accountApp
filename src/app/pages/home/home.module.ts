@@ -2,7 +2,7 @@ import { ComponentsModule } from './../../@core/components/components.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HomeComponent } from '../home/home.component';
 import { CreateAccountComponent } from '../../pages/home/create-account/create-account.component';
-import { AlertComponent } from './../home/alert/alert.component';
+import { RemoveTransactionComponent } from './remove-transaction/remove-transaction';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NgModule } from '@angular/core';
@@ -17,14 +17,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { CreateColumnComponent } from './create-column/create-column.component';
-
+import {MatSelectModule} from '@angular/material/select'
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { RemoveAccountComponent } from './remove-account/remove-account.component';
 @NgModule({
   declarations: [
     HomeComponent,
     CreateAccountComponent,
     EditAccountComponent,
     CreateColumnComponent,
-    AlertComponent,
+    RemoveTransactionComponent,
+    RemoveAccountComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +44,9 @@ import { CreateColumnComponent } from './create-column/create-column.component';
     MatNativeDateModule,
     ReactiveFormsModule,
     ComponentsModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatAutocompleteModule
   ],
 })
 export class HomeModule {}

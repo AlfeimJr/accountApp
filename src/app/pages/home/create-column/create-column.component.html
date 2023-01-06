@@ -17,20 +17,45 @@
 
     <mat-form-field class="example-form-field" appearance="outline">
       <mat-label>Valor</mat-label>
-      <input matInput type="text" formControlName="value" />
+      <input
+        matInput
+        type="number"
+        min="0.00"
+        max="10000.00"
+        step="0.01"
+        formControlName="value"
+      />
     </mat-form-field>
 
-    <mat-form-field class="example-form-field" appearance="outline">
+    <mat-form-field appearance="outline">
       <mat-label>Pago?</mat-label>
-      <input matInput type="text" formControlName="pay" />
+      <mat-select formControlName="pay">
+        <mat-option *ngFor="let pay of payOptions" [value]="pay">{{
+          pay
+        }}</mat-option>
+      </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="example-form-field" appearance="outline">
-      <mat-label>Mês</mat-label>
-      <input matInput type="text" formControlName="month" />
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Mês do vencimento</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="month"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let month of filtredMonths | async" [value]="month">
+          {{ month }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     <div>
-      <button type="submit">Criar</button>
+      <app-button
+        textContent="Criar Transação"
+        class="confirm"
+        type="submit"
+      ></app-button>
     </div>
   </form>
 </div>
