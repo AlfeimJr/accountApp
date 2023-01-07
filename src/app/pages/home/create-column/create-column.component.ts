@@ -38,6 +38,7 @@ export class CreateColumnComponent {
     'Novembro',
     'Dezembro',
   ];
+  isCreate: boolean = false;
   filtredMonths!: Observable<string[]>;
   payOptions: string[] = ['Pendente', 'Pago'];
   constructor(
@@ -76,8 +77,14 @@ export class CreateColumnComponent {
         ...this.column.value,
         accountId: this.account.id,
       } as createTransactionT)
-      .subscribe((account: any) => {
-        this.accountService.editColumn(account.id, account).subscribe();
+      .subscribe({
+        next: (account: any) => {
+          this.accountService.editColumn(account.id, account).subscribe();
+          this.isCreate = true
+          this.matDialogRef.close({
+            isCreate: this.isCreate
+          });
+        },
       });
   }
 

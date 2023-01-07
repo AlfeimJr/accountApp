@@ -40,6 +40,9 @@
                   <p>MÊS DE {{ launch.month.toUpperCase() }}</p>
                 </mat-panel-title>
                 <mat-panel-description>
+                  <div>
+                    <P>Valor Total: R$ {{value}}</P>
+                  </div>
                   <mat-icon (click)="openDeleteAccount(launch)"
                     >delete</mat-icon
                   >
@@ -157,6 +160,7 @@
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
               </table>
+
             </mat-expansion-panel>
           </mat-accordion>
         </div>

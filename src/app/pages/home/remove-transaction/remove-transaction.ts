@@ -16,6 +16,7 @@ type dataT = {
 export class RemoveTransactionComponent {
   @Input() textContent: string = '';
   column!: accountI;
+  isRemoved : boolean = false;
   trasaction: transactionsI = {
     id: 0,
     category: '',
@@ -38,8 +39,14 @@ export class RemoveTransactionComponent {
 
   confirmDelete() {
     this.accountService.deleteTransaction(this.trasaction.id).subscribe({
+      next: ()=>{
+        this.isRemoved = true
+        this.matDialogRef.close({
+          isRemoved: this.isRemoved
+        })
+      },
       complete: ()=>{
-        this.matDialogRef.close()
+
       }
     })
   }

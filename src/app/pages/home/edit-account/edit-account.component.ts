@@ -22,6 +22,7 @@ type dataT = {
 export class EditAccountComponent {
   account!: transactionsI;
   column!: FormGroup;
+  isEdit: boolean = false
   payOptions: payOptionsI[] = [
     { label: 'Pendente', class: 'pending' },
     { label: 'Pago', class: 'pay' },
@@ -70,9 +71,16 @@ export class EditAccountComponent {
       .editColumn(this.account.id, this.column.value)
       .subscribe({
         next: () => {
-          this.matDialogRef.close();
+          this.isEdit = true
+          this.matDialogRef.close({
+            isEdit: this.isEdit
+          });
         },
+        complete: () =>{
+
+        }
       });
+
   }
 
   isFiltredMonths(){

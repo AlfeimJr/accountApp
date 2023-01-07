@@ -9,7 +9,7 @@
     {
       "data": "22/12/2022",
       "category": "Energia",
-      "value": 371.94,
+      "value": 301.94,
       "pay": "Pago",
       "month": "Dezembro",
       "accountId": 1,
@@ -37,7 +37,7 @@
       "data": "10/01/2023",
       "category": "Aluguel",
       "value": 1045,
-      "pay": "Pendente",
+      "pay": "Pago",
       "month": "Janeiro",
       "accountId": 1,
       "id": 4
@@ -81,7 +81,7 @@
     {
       "data": "10/01/2023",
       "category": "Oi - Celular",
-      "value": "45",
+      "value": 45,
       "pay": "Pago",
       "month": "Janeiro",
       "accountId": 1,

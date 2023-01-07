@@ -29,6 +29,8 @@ export class HomeComponent {
     'edit',
     'delete',
   ];
+  values: number[] = []
+  value: number = 0
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -49,6 +51,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getAccount();
+    setTimeout(() => this.someValues(), 500)
   }
   openDialog() {
     this.dialog
@@ -73,8 +76,13 @@ export class HomeComponent {
         width: '500px',
       })
       .afterClosed()
-      .subscribe((result) => {
-        this.getAccount();
+      .subscribe((result: {isRemoved: boolean}) => {
+        if(result.isRemoved == true){
+          this.values = []
+          this.value = 0
+          this.getAccount();
+          setTimeout(()=> this.someValues(), 200)
+        }
       });
   }
 
@@ -100,8 +108,13 @@ export class HomeComponent {
         },
       })
       .afterClosed()
-      .subscribe((result) => {
-        this.getAccount();
+      .subscribe((result: {isCreate: boolean}) => {
+        if(result.isCreate == true){
+          this.values = []
+          this.value = 0
+          this.getAccount();
+          setTimeout(()=> this.someValues(), 200)
+        }
       });
   }
 
@@ -114,13 +127,20 @@ export class HomeComponent {
         width: '500px'
       })
       .afterClosed()
-      .subscribe((result) => {
-        this.getAccount();
+      .subscribe((response: {isEdit: boolean}) => {
+        if(response.isEdit == true){
+          this.values = []
+          this.value = 0
+          this.getAccount();
+          setTimeout(()=> this.someValues(), 200)
+        }
+
       });
   }
 
   public setPaginationData(data: accountI[]): void {
     this.pagination.items = data;
+
   }
   private getFilters(): { [key: string]: string | number } {
     return {
@@ -134,5 +154,16 @@ export class HomeComponent {
       this.accounts = account;
       this.setPaginationData(account);
     });
+  }
+
+  someValues(){
+    this.pagination.items.forEach(item =>{
+      item.transactions.forEach(transaction =>{
+        this.values.push(transaction.value)
+      })
+    })
+    for(let i = 0; i<this.values.length; i++){
+      this.value+=this.values[i]
+    }
   }
 }
