@@ -16,7 +16,7 @@ export class AccountService {
   getAccount(filters: any): Observable<accountI[]>{
     return this.http
     .get<accountI[]>(apiUrl + '/account?_embed=transactions', {params: filters})
-    .pipe(map((response: accountI[]) => response));
+
   }
 
   createAccount(account: createAccountT){

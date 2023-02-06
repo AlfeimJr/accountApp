@@ -13,11 +13,13 @@ export interface accountI {
   id: number;
   month: string;
   transactions: transactionsI[];
+  totalValue: number;
 }
 
 export class Account {
   month: string = '';
   accounts: accountI[] = [];
+  totalValue: number = 0;
 }
 
 export class Column {

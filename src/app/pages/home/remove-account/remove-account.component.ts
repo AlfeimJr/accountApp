@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { accountI } from './../../../@core/interfaces/account.interface';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AccountService } from './../../../services/account.service';
@@ -25,11 +26,14 @@ export class RemoveAccountComponent {
     this.account = this.data.account
   }
 
-  confirmDelete() {
-    this.accountService.deleteAccount(this.account.id).subscribe({
-      complete: ()=>{
-        this.matDialogRef.close()
-      }
-    })
+  confirmDelete(){
+      this.accountService.deleteAccount(this.account.id).subscribe({
+        complete: ()=>{
+          this.account.transactions.forEach((transaction)=>{
+            this.accountService.deleteTransaction(transaction.id).subscribe()
+          })
+          this.matDialogRef.close()
+        }
+      })
   }
 }

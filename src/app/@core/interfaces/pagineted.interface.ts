@@ -1,4 +1,4 @@
-import { transactionsI, accountI } from './account.interface';
+import { transactionsI, accountI, Account } from './account.interface';
 export interface paginatedI {
   items: accountI[],
 	_page: number,

@@ -9,7 +9,11 @@
         </button>
       </div>
     </div>
+    <div *ngIf="pagination.items.length == 0" class="not-found-account">
+      <mat-icon>error</mat-icon>
+      <p>Voce não possui nenhum lançamento<br> crie um e organize da forma que preferir!</p>
 
+    </div>
     <div class="table-group" *ngIf="pagination.items">
       <div class="mat-elevation-z8" *ngFor="let launch of pagination.items">
         <div class="example-table-container">
@@ -41,7 +45,7 @@
                 </mat-panel-title>
                 <mat-panel-description>
                   <div>
-                    <P>Valor Total: R$ {{value}}</P>
+                    <P>Valor Total: R$ {{launch.totalValue}}</P>
                   </div>
                   <mat-icon (click)="openDeleteAccount(launch)"
                     >delete</mat-icon

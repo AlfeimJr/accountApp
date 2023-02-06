@@ -1,3 +1,4 @@
+import { finalize, Observable, switchMap, tap } from 'rxjs';
 import { AccountService } from './../../services/account.service';
 import { paginatedI } from '../../@core/interfaces/pagineted.interface';
 import {
@@ -29,8 +30,9 @@ export class HomeComponent {
     'edit',
     'delete',
   ];
-  values: number[] = []
-  value: number = 0
+  values: number[] = [];
+  value: number = 0;
+  sumValue: number[] = [];
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -50,8 +52,7 @@ export class HomeComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getAccount();
-    setTimeout(() => this.someValues(), 500)
+    this.getAccount().subscribe();
   }
   openDialog() {
     this.dialog
@@ -63,7 +64,7 @@ export class HomeComponent {
       })
       .afterClosed()
       .subscribe((result) => {
-        this.getAccount();
+        this.getAccount().subscribe();
       });
   }
 
@@ -76,12 +77,11 @@ export class HomeComponent {
         width: '500px',
       })
       .afterClosed()
-      .subscribe((result: {isRemoved: boolean}) => {
-        if(result.isRemoved == true){
-          this.values = []
-          this.value = 0
-          this.getAccount();
-          setTimeout(()=> this.someValues(), 200)
+      .subscribe((result: { isRemoved: boolean }) => {
+        if (result.isRemoved == true) {
+          this.values = [];
+          this.value = 0;
+          this.getAccount().subscribe();
         }
       });
   }
@@ -95,7 +95,7 @@ export class HomeComponent {
       })
       .afterClosed()
       .subscribe((result) => {
-        this.getAccount();
+        this.getAccount().subscribe();
       });
   }
 
@@ -108,12 +108,11 @@ export class HomeComponent {
         },
       })
       .afterClosed()
-      .subscribe((result: {isCreate: boolean}) => {
-        if(result.isCreate == true){
-          this.values = []
-          this.value = 0
-          this.getAccount();
-          setTimeout(()=> this.someValues(), 200)
+      .subscribe((result: { isCreate: boolean }) => {
+        if (result.isCreate == true) {
+          this.values = [];
+          this.value = 0;
+          this.getAccount().subscribe();
         }
       });
   }
@@ -124,23 +123,20 @@ export class HomeComponent {
         data: {
           account: account,
         },
-        width: '500px'
+        width: '500px',
       })
       .afterClosed()
-      .subscribe((response: {isEdit: boolean}) => {
-        if(response.isEdit == true){
-          this.values = []
-          this.value = 0
-          this.getAccount();
-          setTimeout(()=> this.someValues(), 200)
+      .subscribe((response: { isEdit: boolean }) => {
+        if (response.isEdit == true) {
+          this.values = [];
+          this.value = 0;
+          this.getAccount().subscribe();
         }
-
       });
   }
 
   public setPaginationData(data: accountI[]): void {
     this.pagination.items = data;
-
   }
   private getFilters(): { [key: string]: string | number } {
     return {
@@ -149,21 +145,24 @@ export class HomeComponent {
     };
   }
 
-  getAccount() {
-    this.accountService.getAccount(this.getFilters()).subscribe((account) => {
-      this.accounts = account;
-      this.setPaginationData(account);
+  getAccount(): Observable<accountI> {
+    return new Observable((observer) => {
+      this.accountService.getAccount(this.getFilters()).subscribe((account) => {
+        this.accounts = account;
+        this.setPaginationData(account);
+        this.someValues();
+      });
+      observer.next();
     });
   }
 
-  someValues(){
-    this.pagination.items.forEach(item =>{
-      item.transactions.forEach(transaction =>{
-        this.values.push(transaction.value)
-      })
-    })
-    for(let i = 0; i<this.values.length; i++){
-      this.value+=this.values[i]
-    }
+  someValues() {
+    this.pagination.items.forEach(item => {
+      item.totalValue = 0;
+      item.transactions.forEach(transaction => {
+        item.totalValue += transaction.value;
+      });
+    });
+
   }
 }

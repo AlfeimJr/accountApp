@@ -1,4 +1,5 @@
 .main-group {
+  height: calc(100vh - 175px);
   .page-initial {
     .header-group {
       padding: 20px 10px;
@@ -6,6 +7,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      height: 100%;
       p {
         font-size: 16px;
         color: #989b9d;
@@ -36,13 +38,31 @@
         }
       }
     }
+
+    .not-found-account{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10rem;
+      gap: 10px;
+      flex-direction: column;
+      p{
+        font-size: 18px;
+        text-align: center;
+      }
+
+      mat-icon{
+        font-size: 5rem;
+      }
+    }
   }
   .table-group {
     display: grid;
     grid-template-columns: 50% 50%;
     gap: 15px;
     padding: 15px;
-
+    height: 100%;
+    background-color: #FAFAFA;
     .add-column{
       display: flex;
       align-items: center;

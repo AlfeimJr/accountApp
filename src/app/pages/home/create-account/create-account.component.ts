@@ -28,6 +28,7 @@ export class CreateAccountComponent {
   createForm(account: Account) {
     this.accounts = this.formBuilder.group({
       month: [account.month],
+      totalValue: [account.totalValue],
     });
   }
 
